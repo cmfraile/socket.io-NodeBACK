@@ -31,6 +31,9 @@ class Server {
             console.log("IN");
             socket.on('disconnect',() => {
                 console.log("OUT");
+            });
+            socket.on('angularmsg',msg => {
+                console.log(msg);
             })
         })
     }
