@@ -34,6 +34,7 @@ class Server {
             });
             socket.on('angularmsg',msg => {
                 console.log(msg);
+                this.ioserver.emit('vueltamsg',msg.caja);
             })
         })
     }
