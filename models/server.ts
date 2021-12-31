@@ -2,7 +2,7 @@ import express , { Application } from 'express';
 import cors , {CorsOptions} from 'cors';
 import { createServer , Server as _hs } from 'http';
 import {Server as _is} from 'socket.io';
-import { v4 } from 'uuid';
+import { sc1 } from '../sockets/iocontroller';
 
 class Server {
 
@@ -28,17 +28,7 @@ class Server {
     }
 
     sockets(){
-        this.ioserver.on('connection' , socket => {
-            console.log("IN");
-            socket.on('disconnect',() => {
-                console.log("OUT");
-            });
-            socket.on('angularmsg',(msg,callback) => {
-                console.log(msg);
-                callback(v4());
-                this.ioserver.emit('vueltamsg',msg.caja);
-            })
-        })
+        this.ioserver.on('connection' , sc1 );
     }
 
     listen(){
