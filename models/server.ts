@@ -12,7 +12,7 @@ class Server {
     private coptions:CorsOptions = {origin:'*',methods:'*'};
     private httpserver:_hs;
     private ioserver:_is;
-    private paths = {master:'/api/'}
+    private paths = {ticketmaster:'/api/tickets'}
 
     constructor(){
         this.app = express();
@@ -32,7 +32,7 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.paths.master,require('../controllers/master'));
+        this.app.use(this.paths.ticketmaster,require('../controllers/ticketmaster'));
     }
 
     async conectarDB(){await dbC()};
