@@ -1,4 +1,5 @@
 import { connect as MonConnect, ConnectOptions } from "mongoose";
+import axios from 'axios';
 const mongoose = require('mongoose');
 
 const dbC = async() => {
@@ -13,4 +14,10 @@ const dbC = async() => {
     }catch(err){console.log(err);throw new Error('No se logro establecer la conexión')};
 }
 
-module.exports = { dbC };
+const digidump = async() => {
+    try{
+        axios.get('https://digimon-api.herokuapp.com/api/digimon').then(console.log);
+    }catch(err){throw new Error(`${err}`)};
+}
+
+module.exports = { dbC , digidump };

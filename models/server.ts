@@ -1,5 +1,5 @@
 import express , { Application } from 'express';
-const { dbC } = require('../db/configdb');
+import { dbC , digidump } from '../db/configdb';
 import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
@@ -35,7 +35,7 @@ class Server {
         this.app.use(this.paths.ticketmaster,require('../controllers/ticketmaster'));
     }
 
-    async conectarDB(){await dbC()};
+    async conectarDB(){await dbC() ; await digidump()};
 
     sockets(){
         this.ioserver.on('connection' , sc1 );
