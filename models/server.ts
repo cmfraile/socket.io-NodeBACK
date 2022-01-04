@@ -1,7 +1,8 @@
 import express , { Application } from 'express';
-import cors , {CorsOptions} from 'cors';
+const { dbC } = require('../db/configdb');
+import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
-import {Server as _is} from 'socket.io';
+import { Server as _is } from 'socket.io';
 import { sc1 } from '../sockets/iocontroller';
 
 class Server {
@@ -11,6 +12,7 @@ class Server {
     private coptions:CorsOptions = {origin:'*',methods:'*'};
     private httpserver:_hs;
     private ioserver:_is;
+    private paths = {master:'/api/'}
 
     constructor(){
         this.app = express();
@@ -18,6 +20,8 @@ class Server {
         this.httpserver = createServer(this.app);
         this.ioserver = new _is(this.httpserver,{cors:this.coptions});
         this.middlewares();
+        this.routes();
+        this.conectarDB();
         this.sockets();
     }
 
@@ -26,6 +30,12 @@ class Server {
         this.app.use(cors());
         //this.app.use(express.static('public'));
     }
+
+    routes(){
+        this.app.use(this.paths.master,require('../controllers/master'));
+    }
+
+    async conectarDB(){await dbC()};
 
     sockets(){
         this.ioserver.on('connection' , sc1 );
