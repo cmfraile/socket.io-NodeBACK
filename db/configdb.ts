@@ -17,14 +17,20 @@ const dbC = async() => {
 
 const digidump = async() => {
     try{
-        const misc = await Misc.find() ; console.log(misc);
-        /*
-        axios.get('https://digimon-api.herokuapp.com/api/digimon').then(resp => {
-            let digimonarray:string[] = [];
-            resp.data.forEach((x:any) => { digimonarray.push(x.name) });
-            console.log(digimonarray);
-        });
-        */
+        await Misc.deleteMany({});
+        Misc.find( (err,data) => {console.log(err,data)} );
+        const consulta = async() => {
+           return new Promise ((rs,rj) => {
+                let digimonarray:string[] = [];
+                axios.get('https://digimon-api.herokuapp.com/api/digimon').then(resp => {
+                resp.data.forEach((x:any) => { digimonarray.push(x.name) });
+                rs(digimonarray)
+                }).catch(rj);
+            });
+        }
+        const bdoriginal = await consulta();
+        const insertado = new Misc({bdoriginal}) ; await insertado.save();
+        Misc.find( (err,data) => {console.log(err,data)} );
     }catch(err){throw new Error(`${err}`)};
 }
 
