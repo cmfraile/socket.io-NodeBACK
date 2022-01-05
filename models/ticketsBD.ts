@@ -1,12 +1,18 @@
 import { Schema , model } from 'mongoose';
 
 interface misc { bdoriginal:string[] , bdcopiasinservicio:string[] , bdcopiatendido:string[] }
-
 const miscSchema = new Schema({
     bdoriginal:{type:Array<String>(),required:false},
     bdcopiasinservicio:{type:Array<String>(),required:false},
     bdcopiatendido:{type:Array<String>(),required:false}
 },{collection:'misc'});const Misc = model<misc>('misc',miscSchema);
+
+interface ticket {usuario:string,llamado:Date,atendido:Date}
+const ticketSchema = new Schema({
+    usuario:{type:String,required:true},
+    llamado:{type:Date,required:false},
+    atendido:{type:Date,required:false}
+},{collection:'tickets'});const Ticket = model<ticket>('ticket',ticketSchema)
 
 /*
 adminSchema.methods.toJSON = function(){
@@ -15,4 +21,4 @@ adminSchema.methods.toJSON = function(){
 };
 */
 
-export = Misc;
+module.exports = { Misc , Ticket }
