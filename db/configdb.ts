@@ -1,6 +1,7 @@
 import { connect as MonConnect, ConnectOptions } from "mongoose";
 import axios from 'axios';
-const mongoose = require('mongoose');
+import Misc from '../models/ticketsBD';
+import { Mongoose , Model } from "mongoose";
 
 const dbC = async() => {
     try{
@@ -16,8 +17,15 @@ const dbC = async() => {
 
 const digidump = async() => {
     try{
-        axios.get('https://digimon-api.herokuapp.com/api/digimon').then(console.log);
+        const misc = await Misc.find() ; console.log(misc);
+        /*
+        axios.get('https://digimon-api.herokuapp.com/api/digimon').then(resp => {
+            let digimonarray:string[] = [];
+            resp.data.forEach((x:any) => { digimonarray.push(x.name) });
+            console.log(digimonarray);
+        });
+        */
     }catch(err){throw new Error(`${err}`)};
 }
 
-module.exports = { dbC , digidump };
+export { dbC , digidump }

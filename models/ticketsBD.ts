@@ -1,14 +1,10 @@
 import { Schema , model } from 'mongoose';
 
-const usuarioSchema = new Schema({
-    nombre:{type:String,required:true}
-},{collection:'usuarios'});const Usuario = model('usuario',usuarioSchema);
-
-const ticketSchema = new Schema({
-    usuario:{type:String,required:true},
-    solicitado:{type:Date,required:true},
-    atendido:{type:Date,required:false},
-},{collection:'tickets'});const Ticket = model('ticket',ticketSchema);
+const miscSchema = new Schema({
+    bdoriginal:{type:Array<String>()},
+    bdcopiasinservicio:{type:Array<String>()},
+    bdcopiatendido:{type:Array<String>()}
+},{collection:'misc'});const Misc = model('misc',miscSchema);
 
 /*
 adminSchema.methods.toJSON = function(){
@@ -17,4 +13,4 @@ adminSchema.methods.toJSON = function(){
 };
 */
 
-module.exports = { Usuario , Ticket };
+export = { Misc }
