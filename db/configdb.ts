@@ -31,7 +31,7 @@ const digidump = async() => {
     }
 
     try{
-        if(0){await Misc.deleteMany({})};
+        if(1){await Misc.deleteMany({})};
         const traerdata:any[] = await Misc.find();
         if(traerdata.length !== 1){
             await Misc.deleteMany({});
@@ -53,33 +53,6 @@ const digidump = async() => {
             },{new:true}) ; console.log(cambio);
         }
     }catch(err){throw new Error(`${err}`)}
-
-    /*
-    try{
-        await Misc.deleteMany({});
-        Misc.find( (err,data) => {console.log(err,data)} );
-        const consulta = async() => {
-           return new Promise ((rs,rj) => {
-                let digimonarray:string[] = [];
-                axios.get('https://digimon-api.herokuapp.com/api/digimon').then(resp => {
-                resp.data.forEach((x:any) => { digimonarray.push(x.name) });
-                digimonarray.sort();
-                rs(digimonarray)
-                }).catch(rj);
-            });
-        }
-        const bdoriginal = await consulta().then().catch(err => []);
-        const insertado = new Misc({bdoriginal}) ; await insertado.save();
-        Misc.find( (err,data) => {console.log(err,data)} );
-    }catch(err){throw new Error(`${err}`)};
-    */
-
-    /*
-    try{
-        const consulta:any[] = await Misc.find() ;
-        const consulta2 = await Misc.findById(consulta[0]._id); console.log(consulta2);
-    }catch(err){throw new Error(`${err}`)};
-    */
 
 }
 
