@@ -13,3 +13,10 @@ export const sc1 = (socket:Socket) => {
         socket.broadcast.emit('vueltamsg','PIN');
     });
 };
+
+export const appcola = (socket:Socket) => {
+    console.log("IN2");
+    socket.on('srvrdy',() => {
+        socket.emit('')
+    })
+}

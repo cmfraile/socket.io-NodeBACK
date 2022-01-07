@@ -3,7 +3,7 @@ import { dbC , digidump } from '../db/configdb';
 import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
-import { sc1 } from '../sockets/iocontroller';
+import { appcola, sc1 } from '../sockets/iocontroller';
 
 class Server {
 
@@ -38,7 +38,8 @@ class Server {
     async conectarDB(){await dbC() ; await digidump()};
 
     sockets(){
-        this.ioserver.on('connection' , sc1 );
+        //this.ioserver.on('connection' , sc1 );
+        this.ioserver.on('connection', appcola);
     }
 
     listen(){
