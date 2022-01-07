@@ -38,8 +38,8 @@ class Server {
     async conectarDB(){await dbC() ; await digidump()};
 
     sockets(){
-        //this.ioserver.on('connection' , sc1 );
-        this.ioserver.on('connection', appcola);
+        this.ioserver.on('connection' , sc1 );
+        //this.ioserver.on('connection', appcola);
     }
 
     listen(){

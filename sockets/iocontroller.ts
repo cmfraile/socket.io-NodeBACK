@@ -16,7 +16,9 @@ export const sc1 = (socket:Socket) => {
 
 export const appcola = (socket:Socket) => {
     console.log("IN2");
-    socket.on('srvrdy',() => {
-        socket.emit('')
+    socket.on('generarticket',(msg,callback) => {
+        console.log(msg);
+        socket.emit('vueltaticket','SERVER >>> CLIENTE');
+        callback(v4());
     })
 }
