@@ -31,28 +31,23 @@ const digidump = async() => {
     }
 
     try{
-        if(1){await Misc.deleteMany({})};
-        const traerdata:any[] = await Misc.find();
-        if(traerdata.length !== 1){
-            await Misc.deleteMany({});
-            let data = await consulta().then().catch(err => []);
-            const insertar = await new Misc({bdoriginal:data.sort(),bdcopiasinservicio:shuffle(data)}).save() ; console.log(insertar);
-        }else{
-            let nuevobj:{id:string,bdo:string[],bdss:string[],bda?:string[]|[]} = {
-                id:traerdata[0]._id,
-                bdo:traerdata[0].bdoriginal,
-                bdss:shuffle(traerdata[0].bdoriginal),
-            }; nuevobj.bda = [nuevobj.bdss[0],nuevobj.bdss[1],nuevobj.bdss[2],nuevobj.bdss[3]] ;
-            nuevobj.bda.forEach((x:string) => {
-                const y = nuevobj.bdss;
+        //El delete Many genera nueva data y quitarlo hace que persista:
+        //await Misc.deleteMany({});
+        const consultaprimera = await Misc.find();
+        if(consultaprimera){
+            const digidata = await consulta().then().catch(err => []);
+            let newobj:any = {
+                bdoriginal:digidata,
+                bdcopiasinservicio:shuffle(digidata),
+            } ; newobj.bdcopiatendido = [newobj.bdcopiasinservicio[0],newobj.bdcopiasinservicio[1],newobj.bdcopiasinservicio[2],newobj.bdcopiasinservicio[3]];
+            newobj.bdcopiatendido.forEach((x:string) => {
+                let y:string[] = newobj.bdcopiasinservicio;
                 y.splice(y.indexOf(x),1);
             });
-            const cambio = await Misc.findByIdAndUpdate(nuevobj.id,{
-                bdcopiasinservicio:nuevobj.bdss,
-                bdcopiatendido:nuevobj.bda
-            },{new:true}) ; console.log(cambio);
-        }
-    }catch(err){throw new Error(`${err}`)}
+            await new Misc(newobj).save();
+        };
+        const anydata:any = await Misc.find() ; const data = anydata[0]; console.log(data);
+    }catch(err){throw new Error(`${err}`)};
 
 }
 
