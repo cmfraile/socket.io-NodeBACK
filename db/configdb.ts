@@ -31,11 +31,12 @@ const digidump = async() => {
     }
 
     try{
-        //El delete Many genera nueva data y quitarlo hace que persista:
-        //await Misc.deleteMany({});
-        const consultaprimera = await Misc.find(); console.log(consultaprimera.length) ;
+        
+        //Switch para generar nueva data. ON para generarla, OFF para que persista la anterior:
+        if(0){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
+        
+        const consultaprimera = await Misc.find();
         if(consultaprimera.length == 0){
-            await Misc.deleteMany({});
             const digidata = await consulta().then().catch(err => []);
             let newobj:any = {
                 bdoriginal:digidata,
@@ -46,8 +47,13 @@ const digidump = async() => {
                 y.splice(y.indexOf(x),1);
             });
             await new Misc(newobj).save();
+            newobj.bdcopiatendido.forEach( async(x:string) => {
+                await new Ticket({usuario:x,llamado:null,atendido:null}).save();
+            });
         };
-        const anydata:any = await Misc.find() ; const data = anydata[0]; console.log(anydata);
+        const anydata:any = await Misc.find(); const boleta:any = await Ticket.find();
+        const data = anydata[0];
+        console.log(anydata[0].bdcopiatendido,'\n',boleta);
     }catch(err){throw new Error(`${err}`)};
 
 }

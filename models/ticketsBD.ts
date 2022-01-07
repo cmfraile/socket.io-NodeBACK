@@ -10,8 +10,8 @@ const miscSchema = new Schema({
 interface ticket {usuario:string,llamado:Date,atendido:Date}
 const ticketSchema = new Schema({
     usuario:{type:String,required:true},
-    llamado:{type:Date,required:false},
-    atendido:{type:Date,required:false}
+    llamado:{type:Date||null,required:false},
+    atendido:{type:Date||null,required:false}
 },{collection:'tickets'});const Ticket = model<ticket>('ticket',ticketSchema)
 
 /*
