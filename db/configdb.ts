@@ -33,8 +33,9 @@ const digidump = async() => {
     try{
         //El delete Many genera nueva data y quitarlo hace que persista:
         //await Misc.deleteMany({});
-        const consultaprimera = await Misc.find();
-        if(consultaprimera){
+        const consultaprimera = await Misc.find(); console.log(consultaprimera.length) ;
+        if(consultaprimera.length == 0){
+            await Misc.deleteMany({});
             const digidata = await consulta().then().catch(err => []);
             let newobj:any = {
                 bdoriginal:digidata,
@@ -46,7 +47,7 @@ const digidump = async() => {
             });
             await new Misc(newobj).save();
         };
-        const anydata:any = await Misc.find() ; const data = anydata[0]; console.log(data);
+        const anydata:any = await Misc.find() ; const data = anydata[0]; console.log(anydata);
     }catch(err){throw new Error(`${err}`)};
 
 }
