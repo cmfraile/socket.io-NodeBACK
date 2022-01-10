@@ -16,6 +16,7 @@ export const sc1 = (socket:Socket) => {
 export const fundamentoscallback = (socket:Socket) => {
     console.log("IN - Fundamentos callback");
     socket.on('disconnect',() => { console.log("OUT - Fundamentos callback") });
+    socket.on('angular',(msg,callback) => {console.log(msg);callback(v4())});
 }
 
 export const appcola = (socket:Socket) => {
@@ -24,5 +25,5 @@ export const appcola = (socket:Socket) => {
         console.log(msg);
         socket.emit('vueltaticket','SERVER >>> CLIENTE');
         callback(v4());
-    })
+    });
 }
