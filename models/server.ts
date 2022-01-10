@@ -1,5 +1,5 @@
 import express , { Application } from 'express';
-import { dbC , digidump } from '../db/configdb';
+import { dbC , digidump, nuke } from '../db/configdb';
 import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
@@ -35,12 +35,12 @@ class Server {
         this.app.use(this.paths.ticketmaster,require('../controllers/ticketmaster'));
     }
 
-    async conectarDB(){await dbC() ; await digidump()};
+    async conectarDB(){await dbC() ; await nuke(true) ; await digidump()};
 
     sockets(){
         //this.ioserver.on('connection' , sc1 );
-        this.ioserver.on('connection',fundamentoscallback);
-        //this.ioserver.on('connection', appcola);
+        //this.ioserver.on('connection',fundamentoscallback);
+        this.ioserver.on('connection', appcola);
     }
 
     listen(){

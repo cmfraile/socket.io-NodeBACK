@@ -17,6 +17,8 @@ const dbC = async() => {
     }catch(err){console.log(err);throw new Error('No se logro establecer la conexión')};
 }
 
+const nuke = async(nukeamos:boolean) => {try{if(nukeamos){await Misc.deleteMany({});await Ticket.deleteMany({})}else{return}}catch(err){throw new Error(`${err}`)};}
+
 const digidump = async() => {
 
     const consulta = async() => {
@@ -33,34 +35,27 @@ const digidump = async() => {
     try{
         
         //Switch para generar nueva data. ON para generarla, OFF para que persista la anterior:
-        if(0){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
+        if(1){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
         
         const consultaprimera = await Misc.find();
         if(consultaprimera.length == 0){
             const digidata = await consulta().then().catch(err => []);
             let newobj:any = {
                 bdoriginal:digidata,
-                bdcopiasinservicio:shuffle(digidata),
-            } ; newobj.bdcopiatendido = [newobj.bdcopiasinservicio[0],newobj.bdcopiasinservicio[1],newobj.bdcopiasinservicio[2]];
-            newobj.bdcopiatendido.forEach((x:string) => {
-                let y:string[] = newobj.bdcopiasinservicio;
-                y.splice(y.indexOf(x),1);
-            });
+                bdcopiashuffle:shuffle(digidata),
+                bdcopiasinatender:[],
+                bdcopiatendido:[]
+            };
             await new Misc(newobj).save();
-            newobj.bdcopiatendido.forEach( async(x:string) => {
-                await new Ticket({usuario:x,llamado:null,agente:null}).save();
-            });
         };
         
         //Para comprobar que la data persiste:
-        /*
         const anydata:any = await Misc.find(); const boleta:any = await Ticket.find();
         const data = anydata[0];
-        console.log(anydata[0].bdcopiatendido,'\n',boleta);
-        */
+        console.log(data);
        
     }catch(err){throw new Error(`${err}`)};
 
 }
 
-export { dbC , digidump }
+export { dbC , digidump , nuke }

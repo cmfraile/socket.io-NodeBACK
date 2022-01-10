@@ -1,9 +1,10 @@
 import { Schema , model } from 'mongoose';
 
-interface misc { bdoriginal:string[] , bdcopiasinservicio:string[] , bdcopiatendido:string[] }
+interface misc { bdoriginal:string[] , bdcopiashuffle:string[] , bdcopiasinatender:string[] , bdcopiatendido:string[] }
 const miscSchema = new Schema({
     bdoriginal:{type:Array<String>(),required:false},
-    bdcopiasinservicio:{type:Array<String>(),required:false},
+    bdcopiashuffle:{type:Array<String>(),required:false},
+    bdcopiasinatender:{type:Array<String>(),required:false},
     bdcopiatendido:{type:Array<String>(),required:false}
 },{collection:'misc'});const Misc = model<misc>('misc',miscSchema);
 
