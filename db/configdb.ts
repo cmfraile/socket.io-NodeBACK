@@ -17,9 +17,7 @@ const dbC = async() => {
     }catch(err){console.log(err);throw new Error('No se logro establecer la conexión')};
 }
 
-const nuke = async(nukeamos:boolean) => {try{if(nukeamos){await Misc.deleteMany({});await Ticket.deleteMany({})}else{return}}catch(err){throw new Error(`${err}`)};}
-
-const digidump = async() => {
+const digidump = async(nuke:boolean) => {
 
     const consulta = async() => {
         return new Promise<string[]|[]> ((rs,rj) => {
@@ -35,7 +33,7 @@ const digidump = async() => {
     try{
         
         //Switch para generar nueva data. ON para generarla, OFF para que persista la anterior:
-        if(0){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
+        if(nuke){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
         
         const consultaprimera = await Misc.find();
         if(consultaprimera.length == 0){
@@ -58,4 +56,4 @@ const digidump = async() => {
 
 }
 
-export { dbC , digidump , nuke }
+export { dbC , digidump }

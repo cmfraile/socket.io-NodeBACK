@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import { Socket } from 'socket.io';
+const { Misc , Ticket } = require('../models/ticketsBD');
 
 export const sc1 = (socket:Socket) => {
     console.log("IN");
@@ -22,5 +23,19 @@ export const fundamentoscallback = (socket:Socket) => {
 export const appcola = (socket:Socket) => {
     console.log("IN - Aplicacion de cola");
     socket.on('disconnect',() => {console.log("OUT - Aplicacion de cola")});
-    socket.on('crearticket',(msg,callback) => {callback('vuelta')});
+    /*PREGUNTEN LO QUE PREGUNTEN, ESTO FUNCIONA:
+    socket.on('crearticket',async(msg,callback) => {
+        const prueba = await Misc.find();
+        console.log(prueba);
+        callback(prueba);
+    })*/
+    socket.on('crearticket',async(callback) => {
+        let [{ _id:id , bdcopiashuffle:bdcs , bdcopiasinatender:bdcsa }] = await Misc.find();
+        const sinatender = bdcs.shift();
+        bdcsa.push(sinatender);
+        await Misc.findByIdAndUpdate(id,{bdcopiashuffle:bdcs,bdcopiasinatender:bdcsa});
+        const nuevoticket = new Ticket({usuario:sinatender,llamado:null,agente:null});
+        const consulta2 = await Misc.find() ; console.log(consulta2,consulta2[0].bdcopiasinatender.length);
+        callback(nuevoticket);
+    })
 }
