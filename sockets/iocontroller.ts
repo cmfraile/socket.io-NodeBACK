@@ -7,12 +7,16 @@ export const sc1 = (socket:Socket) => {
         console.log("OUT");
     });
     socket.on('angularmsg',(msg,callback) => {
-        console.log(msg);
-        callback(v4());
+        //callback(v4());
         socket.emit('vueltamsg',msg.caja);
-        socket.broadcast.emit('vueltamsg','PIN');
+        //socket.broadcast.emit('vueltamsg','PIN');
     });
 };
+
+export const fundamentoscallback = (socket:Socket) => {
+    console.log("IN - Fundamentos callback");
+    socket.on('disconnect',() => { console.log("OUT - Fundamentos callback") });
+}
 
 export const appcola = (socket:Socket) => {
     console.log("IN2");
