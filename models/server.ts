@@ -35,7 +35,7 @@ class Server {
         this.app.use(this.paths.ticketmaster,require('../controllers/ticketmaster'));
     }
 
-    async conectarDB(){await dbC() ; await nuke(true) ; await digidump()};
+    async conectarDB(){await dbC() ; await nuke(false) ; await digidump()};
 
     sockets(){
         //this.ioserver.on('connection' , sc1 );

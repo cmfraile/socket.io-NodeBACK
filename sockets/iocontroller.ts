@@ -20,10 +20,7 @@ export const fundamentoscallback = (socket:Socket) => {
 }
 
 export const appcola = (socket:Socket) => {
-    console.log("IN2");
-    socket.on('generarticket',(msg,callback) => {
-        console.log(msg);
-        socket.emit('vueltaticket','SERVER >>> CLIENTE');
-        callback(v4());
-    });
+    console.log("IN - Aplicacion de cola");
+    socket.on('disconnect',() => {console.log("OUT - Aplicacion de cola")});
+    socket.on('crearticket',(msg,callback) => {callback('vuelta')});
 }

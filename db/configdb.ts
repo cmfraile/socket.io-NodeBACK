@@ -35,7 +35,7 @@ const digidump = async() => {
     try{
         
         //Switch para generar nueva data. ON para generarla, OFF para que persista la anterior:
-        if(1){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
+        if(0){await Misc.deleteMany({}) ; await Ticket.deleteMany({})};
         
         const consultaprimera = await Misc.find();
         if(consultaprimera.length == 0){
@@ -49,10 +49,10 @@ const digidump = async() => {
             await new Misc(newobj).save();
         };
         
-        //Para comprobar que la data persiste:
+        /*Para comprobar que la data persiste:
         const anydata:any = await Misc.find(); const boleta:any = await Ticket.find();
         const data = anydata[0];
-        console.log(data);
+        console.log(data);*/
        
     }catch(err){throw new Error(`${err}`)};
 
