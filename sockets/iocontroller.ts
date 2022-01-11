@@ -39,9 +39,10 @@ export const appcola = (socket:Socket) => {
     });
     socket.on('atenderticket',async({id,agente},callback) => {
         const atendido = await Ticket.findByIdAndUpdate(id,{agente,llamado:new Date()},{new:true});
-        let { _id:idtabla , bdcopiasinatender:bdcsa , bdcopiatendido:bdca } = await Misc.find()[0];
+        const [misconsulta] = await Misc.find();
+        let { _id:idtabla , bdcopiasinatender:bdcsa , bdcopiatendido:bdca } = misconsulta;
         bdcsa.splice(bdcsa.indexOf(atendido.usuario),1)
-        bdca.push(atendido.usuario)
+        bdca.push(atendido.usuario);
         await Misc.findByIdAndUpdate(idtabla,{bdcopiasinatender:bdcsa,bdcopiatendido:bdca});
         callback(atendido);
     });
