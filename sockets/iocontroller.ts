@@ -36,5 +36,13 @@ export const appcola = (socket:Socket) => {
         await Misc.findByIdAndUpdate(id,{bdcopiashuffle:bdcs,bdcopiasinatender:bdcsa});
         const nuevoticket = new Ticket({usuario:sinatender,creado:new Date(),llamado:null,agente:null}); nuevoticket.save();
         callback(nuevoticket);
-    })
+    });
+    socket.on('atenderticket',async({id,agente},callback) => {
+        const atendido = await Ticket.findByIdAndUpdate(id,{agente,llamado:new Date()},{new:true});
+        let { _id:idtabla , bdcopiasinatender:bdcsa , bdcopiatendido:bdca } = await Misc.find()[0];
+        bdcsa.splice(bdcsa.indexOf(atendido.usuario),1)
+        bdca.push(atendido.usuario)
+        await Misc.findByIdAndUpdate(idtabla,{bdcopiasinatender:bdcsa,bdcopiatendido:bdca});
+        callback(atendido);
+    });
 }
