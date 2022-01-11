@@ -11,7 +11,7 @@ const ticketget = async(req:Request,res:Response) => {
     try{
         return res.status(200).json(await Ticket.find());
     }catch(err){return res.status(500).json(err)}
-}
+};
 
 //RUTAS:
 //_r.get('/',ping);
