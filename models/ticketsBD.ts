@@ -8,9 +8,10 @@ const miscSchema = new Schema({
     bdcopiatendido:{type:Array<String>(),required:false}
 },{collection:'misc'});const Misc = model<misc>('misc',miscSchema);
 
-interface ticket {usuario:string,llamado:Date|null,agente:string|null};
+interface ticket {usuario:string,creado:Date,llamado:Date|null,agente:string|null};
 const ticketSchema = new Schema({
     usuario:{type:String,required:true},
+    creado:{type:Date,required:true},
     llamado:{type:Date||null,required:false},
     agente:{type:String||null,required:false}
 },{collection:'tickets'});const Ticket = model<ticket>('ticket',ticketSchema)

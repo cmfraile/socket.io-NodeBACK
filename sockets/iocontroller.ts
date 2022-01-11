@@ -34,8 +34,7 @@ export const appcola = (socket:Socket) => {
         const sinatender = bdcs.shift();
         bdcsa.push(sinatender);
         await Misc.findByIdAndUpdate(id,{bdcopiashuffle:bdcs,bdcopiasinatender:bdcsa});
-        const nuevoticket = new Ticket({usuario:sinatender,llamado:null,agente:null}); nuevoticket.save();
-        const consulta2 = await Misc.find() ; console.log(await Ticket.find());
+        const nuevoticket = new Ticket({usuario:sinatender,creado:new Date(),llamado:null,agente:null}); nuevoticket.save();
         callback(nuevoticket);
     })
 }
