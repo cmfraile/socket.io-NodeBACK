@@ -45,6 +45,7 @@ export const appcola = (socket:Socket) => {
         bdca.push(atendido.usuario);
         await Misc.findByIdAndUpdate(idtabla,{bdcopiasinatender:bdcsa,bdcopiatendido:bdca});
         callback(atendido);
+        socket.emit('vuelta','LoremIpsumDolor')
     });
     socket.on('borrarticket',async(ticket:any) => {
         await Ticket.findByIdAndDelete(ticket._id);
