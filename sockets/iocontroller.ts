@@ -18,6 +18,9 @@ export const fundamentoscallback = (socket:Socket) => {
     console.log("IN - Fundamentos callback");
     socket.on('disconnect',() => { console.log("OUT - Fundamentos callback") });
     socket.on('angular',(msg,callback) => {console.log(msg);callback(v4())});
+    //socket.on('cts',(callback) => {console.log('SERVIDOR <<< CLIENTE');callback(v4())});
+    socket.on('cts',() => {socket.emit('angular')});
+
 }
 
 export const appcola = (socket:Socket) => {
