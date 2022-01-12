@@ -47,6 +47,7 @@ export const appcola = (socket:Socket) => {
         bdcsa.splice(bdcsa.indexOf(atendido.usuario),1)
         bdca.push(atendido.usuario);
         await Misc.findByIdAndUpdate(idtabla,{bdcopiasinatender:bdcsa,bdcopiatendido:bdca});
+        socket.broadcast.emit('alarmaticketvuelta');
         callback(atendido);
     });
     socket.on('borrarticket',async(ticket:any) => {
