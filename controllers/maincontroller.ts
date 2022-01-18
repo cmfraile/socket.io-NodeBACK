@@ -4,7 +4,11 @@ import * as ev from 'express-validator';
 const _r = Router();
 
 //CONTROLADORES:
-const ping = async(req:Request,res:Response) => {try{return res.status(200).send('Ping con servidor')}catch(err){return res.status(500).json(err)}};
+const ping = async(req:Request,res:Response) => {
+    try{
+    console.log("llegas aqui");
+    return res.status(200).json({msg:'Ping correcto'});
+}catch(err){return res.status(500).json(err)}};
 
 //RUTAS:
 _r.get('/',ping);

@@ -12,7 +12,9 @@ class Server {
     private coptions:CorsOptions = {origin:'*',methods:'*'};
     private httpserver:_hs;
     private ioserver:_is;
-    private paths = {ticketmaster:'/api/tickets'}
+    private paths = {
+        ping:'/api/'
+    }
 
     constructor(){
         this.app = express();
@@ -32,7 +34,7 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.paths.ticketmaster,require('../controllers/ticketmaster'));
+        this.app.use(this.paths.ping,require('../controllers/maincontroller'));
     }
 
     async conectarDB(){await dbC()};

@@ -51,3 +51,4 @@ export const appcola = (socket:Socket) => {
     });
     socket.on('alarmaticketida',async()=>{socket.emit('alarmaticketvuelta')});
 }
+*/
