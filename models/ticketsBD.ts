@@ -1,13 +1,6 @@
 import { Schema , model } from 'mongoose';
 
-interface misc { bdoriginal:string[] , bdcopiashuffle:string[] , bdcopiasinatender:string[] , bdcopiatendido:string[] }
-const miscSchema = new Schema({
-    bdoriginal:{type:Array<String>(),required:false},
-    bdcopiashuffle:{type:Array<String>(),required:false},
-    bdcopiasinatender:{type:Array<String>(),required:false},
-    bdcopiatendido:{type:Array<String>(),required:false}
-},{collection:'misc'});const Misc = model<misc>('misc',miscSchema);
-
+/*
 interface ticket {usuario:string,creado:Date,llamado:Date|null,agente:string|null};
 const ticketSchema = new Schema({
     usuario:{type:String,required:true},
@@ -15,12 +8,10 @@ const ticketSchema = new Schema({
     llamado:{type:Date||null,required:false},
     agente:{type:String||null,required:false}
 },{collection:'tickets'});const Ticket = model<ticket>('ticket',ticketSchema)
-
-/*
 adminSchema.methods.toJSON = function(){
     const { nombre } = this.toObject();
     return { nombre };
 };
 */
 
-module.exports = { Misc , Ticket }
+//module.exports = { Ticket }
