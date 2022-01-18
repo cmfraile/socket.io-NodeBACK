@@ -10,7 +10,7 @@ const dbC = async() => {
         const options:ConnectOptions = {
             user:'usuario',
             pass:'usuario',
-            dbName:'tickets',
+            dbName:'chat',
         }
         await MonConnect(`mongodb://localhost:27017/${options.dbName}`,options,() => {console.log});
         //console.log('Estamos correctamente conectados a la base de datos.')
