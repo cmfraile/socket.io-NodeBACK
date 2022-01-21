@@ -15,7 +15,6 @@ const downloadfile = async() => {
             resp.data.pipe(createWriteStream(uP)).on('finish',() => {rs}).on('error',(err:any) => {rj(err)});
         })
     })
-
 }
 
 const uploadfile = (fichero:UploadedFile) => {

@@ -5,6 +5,8 @@ import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
 import { fundamentoscallback } from '../sockets/iocontroller';
 const { downloadfile:dF } = require('../helpers/movefiles');
+import fs from 'fs';
+import path from 'path';
 
 class Server {
 
@@ -37,6 +39,14 @@ class Server {
 
     routes(){
         this.app.use(this.paths.ping,require('../controllers/maincontroller'));
+        if(!fs.existsSync(path.join(__dirname,'../db&storage'))){
+            fs.mkdir(path.join(__dirname,'../db&storage'),(err) => {
+                if(err == null){
+                    fs.mkdir(path.join(__dirname,'../db&storage','/storage'),() => {});
+                }
+            });
+        }else{fs.mkdir(path.join(__dirname,'../db&storage','/storage'),() => {});};
+
     }
 
     async conectarDB(){await dbC()};
@@ -45,7 +55,7 @@ class Server {
         this.ioserver.on('connection',fundamentoscallback);
     }
 
-    async testing(){ if(1){await dF();} };
+    async testing(){ if(0){await dF();} };
 
     listen(){
         this.httpserver.listen(this.port, () => {
