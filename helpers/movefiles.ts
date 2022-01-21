@@ -1,25 +1,22 @@
 import { UploadedFile } from "express-fileupload";
-import { existsSync , unlinkSync } from 'fs';
+import { existsSync , unlinkSync , createWriteStream } from 'fs';
 import { v4 } from 'uuid';
 import path from 'path';
-<<<<<<< HEAD
-import { Axios } from 'axios';
-import fs from 'fs';
+import axios from "axios";
 
 //https://futurestud.io/tutorials/download-files-images-with-axios-in-node-js;
 
 const downloadfile = async() => {
     const urlpicsum:string = 'https://picsum.photos/200';
-    //const nTEMP = `${v4()}.${extension}`;
     const nTEMP = `${v4()}.jpg`;
-    const uP = path.join(__dirname,'../db&storage/storage',nTEMP);
-    const writer = fs.createWriteStream(uP);
-    const response:any = await new Axios({ url:urlpicsum , method:'GET' , responseType:'stream' });
-    response.data.pipe(writer);
-    return new Promise((rs,rj) => {writer.on('finish',rs) ; writer.on('error',rj)})
+    const uP = path.join(__dirname,'../db&storage/storage',`${nTEMP}`);
+    axios({url:urlpicsum,responseType:'stream'}).then((resp:any) => {
+        new Promise((rs,rj) => {
+            resp.data.pipe(createWriteStream(uP)).on('finish',() => {rs}).on('error',(err:any) => {rj(err)});
+        })
+    })
+
 }
-=======
->>>>>>> bd57d860c62c7dd973f509a6afe985f9ee980530
 
 const uploadfile = (fichero:UploadedFile) => {
     return new Promise((rs,rj) => {
@@ -42,8 +39,4 @@ const delfile = (place:string) => {
     });
 }
 
-<<<<<<< HEAD
 module.exports = { uploadfile , delfile , downloadfile };
-=======
-module.exports = { uploadfile , delfile };
->>>>>>> bd57d860c62c7dd973f509a6afe985f9ee980530
