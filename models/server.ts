@@ -4,6 +4,7 @@ import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
 import { fundamentoscallback } from '../sockets/iocontroller';
+const { downloadfile:dF } = require('../helpers/movefiles');
 
 class Server {
 
@@ -25,6 +26,7 @@ class Server {
         this.routes();
         this.conectarDB();
         this.sockets();
+        this.testing();
     }
 
     middlewares(){
@@ -42,6 +44,8 @@ class Server {
     sockets(){
         this.ioserver.on('connection',fundamentoscallback);
     }
+
+    async testing(){ if(0){await dF();} };
 
     listen(){
         this.httpserver.listen(this.port, () => {
