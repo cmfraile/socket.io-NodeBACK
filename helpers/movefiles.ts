@@ -2,6 +2,7 @@ import { UploadedFile } from "express-fileupload";
 import { existsSync , unlinkSync } from 'fs';
 import { v4 } from 'uuid';
 import path from 'path';
+<<<<<<< HEAD
 import { Axios } from 'axios';
 import fs from 'fs';
 
@@ -17,6 +18,8 @@ const downloadfile = async() => {
     response.data.pipe(writer);
     return new Promise((rs,rj) => {writer.on('finish',rs) ; writer.on('error',rj)})
 }
+=======
+>>>>>>> bd57d860c62c7dd973f509a6afe985f9ee980530
 
 const uploadfile = (fichero:UploadedFile) => {
     return new Promise((rs,rj) => {
@@ -39,4 +42,8 @@ const delfile = (place:string) => {
     });
 }
 
+<<<<<<< HEAD
 module.exports = { uploadfile , delfile , downloadfile };
+=======
+module.exports = { uploadfile , delfile };
+>>>>>>> bd57d860c62c7dd973f509a6afe985f9ee980530
