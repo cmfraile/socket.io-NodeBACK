@@ -8,7 +8,6 @@ const { ValidMaster:VM , correonorepetido } = require('../middlewares/validadore
 const _r = Router();
 
 //CONTROLADORES:
-
 const crearUsuario = async(req:Request,res:Response) => {
     try{
         let data:{correo:string,nick:string,pass:string,pic?:string} = {
