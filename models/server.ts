@@ -39,6 +39,8 @@ class Server {
 
     routes(){
         this.app.use(this.paths.ping,require('../controllers/maincontroller'));
+        
+        //creador de las carpetas de storage:
         if(!fs.existsSync(path.join(__dirname,'../db&storage'))){
             fs.mkdir(path.join(__dirname,'../db&storage'),(err) => {
                 if(err == null){
@@ -55,7 +57,7 @@ class Server {
         this.ioserver.on('connection',fundamentoscallback);
     }
 
-    async testing(){ if(0){await dF();} };
+    async testing(){ if(1){await dF();} };
 
     listen(){
         this.httpserver.listen(this.port, () => {
