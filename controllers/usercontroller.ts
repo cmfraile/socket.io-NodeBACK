@@ -22,14 +22,14 @@ const crearUsuario = async(req:Request,res:Response) => {
         }).catch(async(err:any) => {
             console.log('falla la descarga de imagen',err);
         });
+        return res.status(200).send();
     }catch(err){return res.status(500).json(err)};
 }
 
 //RUTAS:
 _r.post('/',[
-    //ev.body('correo').not().isEmpty(),
-    //ev.body('correo').isEmail(),
-    //ev.body('correo').custom( correonorepetido ),
+    ev.body('correo').isEmail(),
+    ev.body('correo').custom( correonorepetido ),
     ev.body('nick').not().isEmpty(),
     ev.body('pass').not().isEmpty(),
     VM

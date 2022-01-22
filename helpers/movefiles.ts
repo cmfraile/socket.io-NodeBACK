@@ -10,8 +10,8 @@ const downloadfile = async() => {
     const urlpicsum:string = 'https://picsum.photos/200';
     const nTEMP = `${v4()}.jpg`;
     const uP = path.join(__dirname,'../db&storage/storage',`${nTEMP}`);
-    axios({url:urlpicsum,responseType:'stream'}).then((resp:any) => {
-        new Promise((rs,rj) => {
+    return axios({url:urlpicsum,responseType:'stream'}).then((resp:any) => {
+        return new Promise((rs,rj) => {
             resp.data.pipe(createWriteStream(uP)).on('finish',() => {rs(nTEMP)}).on('error',(err:any) => {rj(err)});
         })
     })
