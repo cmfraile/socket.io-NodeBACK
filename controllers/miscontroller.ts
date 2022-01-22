@@ -31,3 +31,5 @@ _r.get('/gdp/:ruta',[
 
 //EXPORTACION DE LAS RUTAS:
 module.exports = _r;
+
+//http://localhost:8000/api/gdp/bcf39c79-3a89-4c92-a675-edc514281c1a.jpg
