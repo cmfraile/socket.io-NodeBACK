@@ -16,7 +16,8 @@ class Server {
     private httpserver:_hs;
     private ioserver:_is;
     private paths = {
-        ping:'/api/'
+        misc:'/api/',
+        user:'/api/user/'
     }
 
     constructor(){
@@ -38,7 +39,8 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.paths.ping,require('../controllers/maincontroller'));
+        this.app.use(this.paths.misc,require('../controllers/miscontroller'));
+        this.app.use(this.paths.user,require('../controllers/usercontroller'))
         
         //creador de las carpetas de storage:
         if(!fs.existsSync(path.join(__dirname,'../db&storage'))){

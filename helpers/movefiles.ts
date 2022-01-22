@@ -12,7 +12,7 @@ const downloadfile = async() => {
     const uP = path.join(__dirname,'../db&storage/storage',`${nTEMP}`);
     axios({url:urlpicsum,responseType:'stream'}).then((resp:any) => {
         new Promise((rs,rj) => {
-            resp.data.pipe(createWriteStream(uP)).on('finish',() => {rs}).on('error',(err:any) => {rj(err)});
+            resp.data.pipe(createWriteStream(uP)).on('finish',() => {rs(nTEMP)}).on('error',(err:any) => {rj(err)});
         })
     })
 }
