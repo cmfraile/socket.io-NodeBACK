@@ -59,7 +59,7 @@ class Server {
         this.ioserver.on('connection',fundamentoscallback);
     }
 
-    async testing(){ if(1){await dF();} };
+    async testing(){ if(0){await dF();} };
 
     listen(){
         this.httpserver.listen(this.port, () => {

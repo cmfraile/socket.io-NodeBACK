@@ -1,5 +1,11 @@
 import { connect as MonConnect, ConnectOptions } from "mongoose";
 
+/*db.createUser({
+    user:'usuario',
+    pwd:'usuario',
+    roles:['readWrite']
+})*/
+
 const dbC = async() => {
     try{
         const options:ConnectOptions = {

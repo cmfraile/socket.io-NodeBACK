@@ -22,6 +22,7 @@ const validRoute = (req:Request,res:Response,next:NextFunction) => {
 const correonorepetido = async(req:Request,res:Response,next:NextFunction) => {
     const { correo } = req.body ; const usuariomod:any = Usuario;
     const existe:number = await usuariomod.find({correo}).length;
+    console.log(existe);
     if(existe){return res.status(400).json({correousado:true})}else{next};
 }
 

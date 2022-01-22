@@ -27,8 +27,9 @@ const crearUsuario = async(req:Request,res:Response) => {
 
 //RUTAS:
 _r.post('/',[
-    ev.body('correo').not().isEmpty(),
-    ev.body('correo').custom( correonorepetido ),
+    //ev.body('correo').not().isEmpty(),
+    //ev.body('correo').isEmail(),
+    //ev.body('correo').custom( correonorepetido ),
     ev.body('nick').not().isEmpty(),
     ev.body('pass').not().isEmpty(),
     VM
