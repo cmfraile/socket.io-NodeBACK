@@ -28,7 +28,6 @@ _r.get('/gdp/:ruta',[
     validRoute,
     VM
 ],dumbpic);
-_r.post('/',(res:Response) => {try{res.status(200).json({msg:'llegas aqui'})}catch(err){console.log});
 
 //EXPORTACION DE LAS RUTAS:
 module.exports = _r;

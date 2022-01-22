@@ -1,10 +1,10 @@
 import { Response , Request } from "express";
 import { Router } from "express";
 import * as ev from 'express-validator';
-import { Usuario } from '../models/usuario';
+import { Usuario } from "../models/usuario";
 import * as bc from 'bcryptjs';
 const { downloadfile } = require('../helpers/movefiles');
-const { ValidMaster:VM , correonorepetido } = require('../middlewares/validadores');
+const { validMaster:VM , correonorepetido } = require('../middlewares/validadores');
 const _r = Router();
 
 //CONTROLADORES:
@@ -20,7 +20,7 @@ const crearUsuario = async(req:Request,res:Response) => {
             data.pic = resp;
             await new Usuario(data).save();
         }).catch(async(err:any) => {
-            console.log('falla la descarga de imagen',err) ; return ;
+            console.log('falla la descarga de imagen',err);
         });
     }catch(err){return res.status(500).json(err)};
 }
