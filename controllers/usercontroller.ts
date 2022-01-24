@@ -26,7 +26,25 @@ const crearUsuario = async(req:Request,res:Response) => {
     }catch(err){return res.status(500).json(err)};
 }
 
+const getUsuarios = async(req:Request,res:Response) => {
+    const dumbcall:string = `${process.env.ENVIROMENT}/api/gdp/`
+    try{
+        const bd = await Usuario.find();
+        let consulta:any[] = [];
+        bd.forEach((x:any) => {
+            const { _id , correo , nick , pass , pic , __v } = x;
+            consulta.push({
+                correo,nick,
+                pic : `${dumbcall}${pic}`
+            });
+        });
+        return res.status(200).json(consulta);
+    }catch(err){return res.status(500).json(err)};
+}
+
 //RUTAS:
+_r.get('/',getUsuarios);
+
 _r.post('/',[
     ev.body('correo').isEmail(),
     ev.body('correo').custom( correonorepetido ),

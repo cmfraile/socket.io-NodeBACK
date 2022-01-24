@@ -1,11 +1,8 @@
 import { Response , Request } from "express";
 import { Router } from "express";
 import * as ev from 'express-validator';
-import { Usuario } from '../models/usuario';
 const { validMaster:VM , validRoute } = require('../middlewares/validadores');
 const _r = Router();
-
-const dumbcall:string = `${process.env.ENVIROMENT}/api/gdp/`
 
 //CONTROLADORES:
 const ping = async(req:Request,res:Response) => {
