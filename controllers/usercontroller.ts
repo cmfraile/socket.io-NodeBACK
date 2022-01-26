@@ -5,7 +5,9 @@ import { Usuario } from "../models/usuario";
 import * as bc from 'bcryptjs';
 const { downloadfile } = require('../helpers/movefiles');
 const { validMaster:VM , correonorepetido } = require('../middlewares/validadores');
+const { eMAIL } = require('../helpers/validadoresDB')
 const _r = Router();
+const { gJWT } = require('../helpers/gJWT');
 
 //CONTROLADORES:
 const crearUsuario = async(req:Request,res:Response) => {
@@ -42,6 +44,18 @@ const getUsuarios = async(req:Request,res:Response) => {
     }catch(err){return res.status(500).json(err)};
 }
 
+const login = async(req:Request,res:Response) => {
+    try{
+        const data = {correo : req.body.correo,pass : req.body.pass};
+        const b1 = await Usuario.findOne({correo:data.correo});
+        if(!b1){return res.status(400).send('El correo no esta registrado en el sistema')};
+        const b2 = bc.compareSync(data.pass,b1.pass);
+        if(!b2){return res.status(400).send('la contraseña no es correcta')};
+        const token = await gJWT(b1._id) ; console.log(token);
+        return res.status(200).send();
+    }catch(err){return res.status(500).json(err)};
+}
+
 //RUTAS:
 _r.get('/',getUsuarios);
 
@@ -52,6 +66,12 @@ _r.post('/',[
     ev.body('pass').not().isEmpty(),
     VM
 ],crearUsuario);
+
+_r.post('/login',[
+    ev.body('correo').isEmail(),
+    ev.body('correo').custom( eMAIL ),
+    ev.body('pass').notEmpty(),
+],login)
 
 //EXPORTACION DE LAS RUTAS:
 module.exports = _r;
