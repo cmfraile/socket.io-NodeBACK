@@ -52,9 +52,15 @@ const login = async(req:Request,res:Response) => {
         if(!b1){return res.status(400).send('El correo no esta registrado en el sistema')};
         const b2 = bc.compareSync(data.pass,b1.pass);
         if(!b2){return res.status(400).send('la contraseña no es correcta')};
-        //IMPORTANTE : el iat y el EXP esta en segundos desde Botch
         const {token,expiracion} = await gJWT(b1._id);
         return res.status(200).json({token,expiracion});
+    }catch(err){return res.status(500).json(err)};
+}
+
+const guard = async(req:Request,res:Response) => {
+    try{
+        const tokentest = req.body.tokentest;
+        console.log(jwt.decode(tokentest));
     }catch(err){return res.status(500).json(err)};
 }
 

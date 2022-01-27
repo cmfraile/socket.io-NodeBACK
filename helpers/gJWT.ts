@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 
 const gJWT = (id:string = "") => {
-    const eis=3600;
+    let eis:any=process.env.EXPIRE || '0' ; eis = parseInt(eis);
     return new Promise((rs,rj) => {
         const secreto:string = process.env.JWTKEY || "";
         if(secreto == ""){throw new Error('fallo la extraer la clave de las variables de entorno')};
