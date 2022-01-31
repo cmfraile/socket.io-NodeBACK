@@ -5,10 +5,12 @@ import { Usuario } from "../models/usuario";
 import * as bc from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 const { downloadfile } = require('../helpers/movefiles');
-const { validMaster:VM , correonorepetido } = require('../middlewares/validadores');
-const { eMAIL } = require('../helpers/validadoresDB')
+const { validMaster:VM } = require('../middlewares/validadores');
+const { eMAIL , usuarioexiste , correonorepetido } = require('../helpers/validadoresDB')
 const _r = Router();
 const { gJWT } = require('../helpers/gJWT');
+
+const dumbcall:string = `${process.env.ENVIROMENT}/api/gdp/`
 
 //CONTROLADORES:
 const crearUsuario = async(req:Request,res:Response) => {
@@ -30,7 +32,6 @@ const crearUsuario = async(req:Request,res:Response) => {
 }
 
 const getUsuarios = async(req:Request,res:Response) => {
-    const dumbcall:string = `${process.env.ENVIROMENT}/api/gdp/`
     try{
         const bd = await Usuario.find();
         let consulta:any[] = [];
@@ -45,6 +46,13 @@ const getUsuarios = async(req:Request,res:Response) => {
     }catch(err){return res.status(500).json(err)};
 }
 
+const getUsuarioSingular = async(req:Request,res:Response) => {
+    try{
+        const consulta:any = await Usuario.findById(req.params.id);
+        return res.status(200).json({nick:consulta.nick , pic:`${dumbcall}${consulta.pic}`})
+    }catch(err){return res.status(500).json(err)};
+}
+
 const login = async(req:Request,res:Response) => {
     try{
         const data = {correo : req.body.correo,pass : req.body.pass};
@@ -53,7 +61,7 @@ const login = async(req:Request,res:Response) => {
         const b2 = bc.compareSync(data.pass,b1.pass);
         if(!b2){return res.status(400).send('la contraseña no es correcta')};
         const {token,expiracion} = await gJWT(b1._id);
-        return res.status(200).json({token,expiracion});
+        return res.status(200).json({token,expiracion,iduser:b1._id});
     }catch(err){return res.status(500).json(err)};
 }
 
@@ -67,6 +75,11 @@ const guard = async(req:Request,res:Response) => {
 //RUTAS:
 _r.get('/',getUsuarios);
 
+_r.get('/:id',[
+    ev.param('id').custom( usuarioexiste ),
+    VM
+],getUsuarioSingular);
+
 _r.post('/',[
     ev.body('correo').isEmail(),
     ev.body('correo').custom( correonorepetido ),
@@ -79,6 +92,7 @@ _r.post('/login',[
     ev.body('correo').isEmail(),
     ev.body('correo').custom( eMAIL ),
     ev.body('pass').notEmpty(),
+    VM
 ],login)
 
 //EXPORTACION DE LAS RUTAS:

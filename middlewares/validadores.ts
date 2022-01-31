@@ -19,10 +19,4 @@ const validRoute = (req:Request,res:Response,next:NextFunction) => {
     next();
 }
 
-const correonorepetido = async(req:Request,res:Response,next:NextFunction) => {
-    const correo = req;
-    const existe:any[] = await Usuario.find({correo});
-    if(existe.length){throw new Error('El correo ya esta en uso')}else{next};
-}
-
-module.exports = { validMaster , validRoute , correonorepetido }
+module.exports = { validMaster , validRoute }
