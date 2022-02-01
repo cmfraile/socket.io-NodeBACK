@@ -6,8 +6,8 @@ import axios from "axios";
 
 //https://futurestud.io/tutorials/download-files-images-with-axios-in-node-js;
 
-const downloadfile = async() => {
-    const urlpicsum:string = 'https://picsum.photos/200';
+const downloadfile = async(pic?:string) => {
+    const p200:string = 'https://picsum.photos/200' ; const urlpicsum:string = `${(pic) ? pic : p200}` ;
     const nTEMP = `${v4()}.jpg`;
     const uP = path.join(__dirname,'../db&storage/storage',`${nTEMP}`);
     return axios({url:urlpicsum,responseType:'stream'}).then((resp:any) => {
@@ -17,6 +17,7 @@ const downloadfile = async() => {
     })
 }
 
+/*
 const uploadfile = (fichero:UploadedFile) => {
     return new Promise((rs,rj) => {
         const eValidas = ['png','jpg','jpeg']
@@ -30,6 +31,19 @@ const uploadfile = (fichero:UploadedFile) => {
         })
     });
 }
+*/
+
+/*
+const uploadfile = async(picnueva:string,picvieja:string) => {
+    return new Promise( async(rs,rj) => {
+        await delfile(pic).then(async() => {
+            await downloadfile(pic).then(resp => rs(resp));
+        })
+    });
+}
+*/
+
+const uploadfile = () => {console.log("hola mundo")}
 
 const delfile = (place:string) => {
     return new Promise((rs,rj) => {

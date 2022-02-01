@@ -53,6 +53,15 @@ const getUsuarioSingular = async(req:Request,res:Response) => {
     }catch(err){return res.status(500).json(err)};
 }
 
+const putUsuario = async(req:Request,res:Response) => {
+    try{
+        const { picnueva:pic , nick } = req.body;
+        const { token , iduser } = req.headers;
+        const usuarioconsulta = await Usuario.findById(iduser);
+        return res.status(200).json({pic,nick,token,iduser,usuarioconsulta});
+    }catch(err){return res.status(500).json(err)};
+};
+
 const login = async(req:Request,res:Response) => {
     try{
         const data = {correo : req.body.correo,pass : req.body.pass};
@@ -94,6 +103,8 @@ _r.post('/login',[
     ev.body('pass').notEmpty(),
     VM
 ],login)
+
+_r.put('/',putUsuario);
 
 //EXPORTACION DE LAS RUTAS:
 module.exports = _r;
