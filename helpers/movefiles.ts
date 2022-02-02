@@ -33,17 +33,12 @@ const uploadfile = (fichero:UploadedFile) => {
 }
 */
 
-/*
 const uploadfile = async(picnueva:string,picvieja:string) => {
-    return new Promise( async(rs,rj) => {
-        await delfile(pic).then(async() => {
-            await downloadfile(pic).then(resp => rs(resp));
-        })
-    });
+   return new Promise( async(rs,rj) => {
+       await delfile(picvieja).catch(() => {throw new Error('borrado falló')});
+       await downloadfile(picnueva).then(resp => rs(resp)).catch(() => {throw new Error('bajar nueva foto falló')});
+   });
 }
-*/
-
-const uploadfile = () => {console.log("hola mundo")}
 
 const delfile = (place:string) => {
     return new Promise((rs,rj) => {

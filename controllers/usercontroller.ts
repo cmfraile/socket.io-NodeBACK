@@ -4,8 +4,8 @@ import * as ev from 'express-validator';
 import { Usuario } from "../models/usuario";
 import * as bc from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
-const { downloadfile } = require('../helpers/movefiles');
-const { validMaster:VM } = require('../middlewares/validadores');
+const { downloadfile , uploadfile } = require('../helpers/movefiles');
+const { validMaster:VM , validPutuser } = require('../middlewares/validadores');
 const { eMAIL , usuarioexiste , correonorepetido } = require('../helpers/validadoresDB')
 const _r = Router();
 const { gJWT } = require('../helpers/gJWT');
@@ -55,10 +55,16 @@ const getUsuarioSingular = async(req:Request,res:Response) => {
 
 const putUsuario = async(req:Request,res:Response) => {
     try{
-        const { picnueva:pic , nick } = req.body;
-        const { token , iduser } = req.headers;
-        const usuarioconsulta = await Usuario.findById(iduser);
-        return res.status(200).json({pic,nick,token,iduser,usuarioconsulta});
+       const { pic , nick } = req.body ; const { id_user } = req.headers ;
+       const consulta:any = await Usuario.findById(id_user);
+       let dataPUT:any = {};
+        if(pic !== undefined){
+           const picput:any = await uploadfile(pic,consulta.pic);
+           dataPUT['pic'] = picput;
+        };
+        if(nick !== undefined){dataPUT['nick'] = nick};
+        const actualizacion = await Usuario.findByIdAndUpdate(id_user,dataPUT,{new:true});
+       return res.status(200).json({actualizacion});
     }catch(err){return res.status(500).json(err)};
 };
 
@@ -104,7 +110,11 @@ _r.post('/login',[
     VM
 ],login)
 
-_r.put('/',putUsuario);
+_r.put('/',[
+    ev.header(['token','id_user']).notEmpty(),
+    ev.body().custom( validPutuser ),
+    //VM
+],putUsuario);
 
 //EXPORTACION DE LAS RUTAS:
 module.exports = _r;

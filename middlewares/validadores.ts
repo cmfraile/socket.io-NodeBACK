@@ -19,4 +19,11 @@ const validRoute = (req:Request,res:Response,next:NextFunction) => {
     next();
 }
 
-module.exports = { validMaster , validRoute }
+const validPutuser = (body:any,next:NextFunction) => {
+    let cambios:number = 2;
+    const { pic , nick } = body;
+    if(pic == undefined){cambios--} ; if(nick == undefined){cambios--};
+    if(cambios == 0){throw new Error('No se produce ningun cambio')}else{next}
+}
+
+module.exports = { validMaster , validRoute , validPutuser }
