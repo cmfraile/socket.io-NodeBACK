@@ -5,7 +5,7 @@ import { Usuario } from "../models/usuario";
 import * as bc from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 const { downloadfile , uploadfile } = require('../helpers/movefiles');
-const { validMaster:VM , validPutuser } = require('../middlewares/validadores');
+const { validMaster:VM , validPutuser , validarJWT:vJWT } = require('../middlewares/validadores');
 const { eMAIL , usuarioexiste , correonorepetido } = require('../helpers/validadoresDB')
 const _r = Router();
 const { gJWT } = require('../helpers/gJWT');
@@ -80,10 +80,11 @@ const login = async(req:Request,res:Response) => {
     }catch(err){return res.status(500).json(err)};
 }
 
-const guard = async(req:Request,res:Response) => {
+const guardia = async(req:Request,res:Response) => {
     try{
-        const tokentest = req.body.tokentest;
-        console.log(jwt.decode(tokentest));
+        const tokentest = req.headers.token;
+        console.log(tokentest);
+        return res.status(200).send();
     }catch(err){return res.status(500).json(err)};
 }
 
@@ -94,6 +95,8 @@ _r.get('/:id',[
     ev.param('id').custom( usuarioexiste ),
     VM
 ],getUsuarioSingular);
+
+_r.post('/guard',guardia);
 
 _r.post('/',[
     ev.body('correo').isEmail(),
@@ -111,9 +114,10 @@ _r.post('/login',[
 ],login)
 
 _r.put('/',[
+    ev.header("token").custom( vJWT ),
     ev.header(['token','id_user']).notEmpty(),
     ev.body().custom( validPutuser ),
-    //VM
+    //VM - Aqui falla y ahora no voy a indagar en porque.
 ],putUsuario);
 
 //EXPORTACION DE LAS RUTAS:

@@ -1,7 +1,7 @@
 import { NextFunction, Request , Response } from 'express';
 import { validationResult } from 'express-validator';
 import { validate } from 'uuid';
-import { Usuario } from '../models/usuario';
+import * as jwt from 'jsonwebtoken';
 import * as fs from 'fs';
 import path from 'path';
 
@@ -26,4 +26,11 @@ const validPutuser = (body:any,next:NextFunction) => {
     if(cambios == 0){throw new Error('No se produce ningun cambio')}else{next}
 }
 
-module.exports = { validMaster , validRoute , validPutuser }
+const validarJWT = (token:string,next:NextFunction) => {
+    const decotoken:any = jwt.decode(token);
+    let trestante = Math.floor(decotoken.exp - (Date.now() /1000));
+    //console.log({trestante,caso:(trestante <= 0) ? true : false});
+    if(trestante <= 0){new Error('token caducado')}else{next};
+}
+
+module.exports = { validMaster , validRoute , validPutuser , validarJWT }
