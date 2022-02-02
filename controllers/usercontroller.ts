@@ -64,7 +64,7 @@ const putUsuario = async(req:Request,res:Response) => {
         };
         if(nick !== undefined){dataPUT['nick'] = nick};
         const actualizacion = await Usuario.findByIdAndUpdate(id_user,dataPUT,{new:true});
-       return res.status(200).json({actualizacion});
+       return res.status(200).send();
     }catch(err){return res.status(500).json(err)};
 };
 
