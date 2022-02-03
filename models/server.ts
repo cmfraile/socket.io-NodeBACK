@@ -66,9 +66,12 @@ class Server {
         const {token} = await gJWT('loremipsumdolor');
         console.log({token,verify:verify(token,process.env.JWTKEY || ""),decode:decode(token)});
         setTimeout(() => {
-            console.log({token,verify:verify(token,process.env.JWTKEY || ""),decode:decode(token)});
+            console.log(verify(token,process.env.JWTKEY || "", (err:any) => {
+                const { name , message , expiredAt } = err;
+                console.log({name,message,expiredAt});
+            }))
         },10000);
-        
+        //desestructuracion al aplicar el object keys sobre el error. El undefined final es la salida negativa del verify.
     };
 
     listen(){
