@@ -26,6 +26,7 @@ const validPutuser = (body:any,next:NextFunction) => {
     if(cambios == 0){throw new Error('No se produce ningun cambio')}else{next}
 }
 
+//La diferencia entre decode y verify es que decode tan solo extrae la información del payload, y verify extrae la información del payload solo si la cabecera y el verificador son correctos. En las zonas que se exige seguridad, emplea verify, y tras verificarla, puedes usar decode.
 const validarJWT = (token:string,next:NextFunction) => {
     const decotoken:any = jwt.decode(token);
     let trestante = Math.floor(decotoken.exp - (Date.now() /1000));

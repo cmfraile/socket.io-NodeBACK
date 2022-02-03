@@ -91,6 +91,7 @@ const guardia = async(req:Request,res:Response) => {
 //RUTAS:
 _r.get('/',getUsuarios);
 
+//Atiende el problema de que todo lo que pida un param desde raiz monopoliza la raiz del método:
 _r.get('/:id',[
     ev.param('id').custom( usuarioexiste ),
     VM

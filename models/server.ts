@@ -4,7 +4,6 @@ import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
 import { fundamentoscallback } from '../sockets/iocontroller';
-const { downloadfile:dF } = require('../helpers/movefiles');
 import fs from 'fs';
 import path from 'path';
 
@@ -29,7 +28,7 @@ class Server {
         this.routes();
         this.conectarDB();
         this.sockets();
-        this.testing();
+        //this.testing();
     }
 
     middlewares(){
@@ -59,7 +58,18 @@ class Server {
         this.ioserver.on('connection',fundamentoscallback);
     }
 
-    async testing(){ if(0){await dF();} };
+    async testing(){
+        //vamos a comprobar si jwt.verify salta cuando el token esta expirado:
+        //EFECTIVAMENTE . Verify tambien salta en caso de expiración:
+        const { verify , decode } = require('jsonwebtoken');
+        const { gJWT } = require('../helpers/gJWT');
+        const {token} = await gJWT('loremipsumdolor');
+        console.log({token,verify:verify(token,process.env.JWTKEY || ""),decode:decode(token)});
+        setTimeout(() => {
+            console.log({token,verify:verify(token,process.env.JWTKEY || ""),decode:decode(token)});
+        },10000);
+        
+    };
 
     listen(){
         this.httpserver.listen(this.port, () => {
