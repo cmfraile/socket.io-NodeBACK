@@ -7,3 +7,16 @@ const usuarioSchema = new Schema({
     pass:{type:String,required:true},
     pic:{type:String,required:true}
 },{collection:'usuario'});export const Usuario = model<usuario>('usuario',usuarioSchema);
+
+export class ConexionUsuario {
+    
+    private usuarios:string[] = [];
+
+    traerusuario(id:string):string[]{
+        this.usuarios.push(id);
+        return this.usuarios;
+    }
+    
+    constructor(){}
+
+}

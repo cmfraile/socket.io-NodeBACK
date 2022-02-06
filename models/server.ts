@@ -3,7 +3,7 @@ import { dbC } from '../db/configdb';
 import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
-import { fundamentoscallback } from '../sockets/iocontroller';
+import { iochat } from '../sockets/iochat';
 import fs from 'fs';
 import path from 'path';
 
@@ -55,7 +55,7 @@ class Server {
     async conectarDB(){await dbC()};
 
     sockets(){
-        this.ioserver.on('connection',fundamentoscallback);
+        this.ioserver.on('connect',iochat);
     }
 
     async testing(){

@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 import { Socket } from 'socket.io';
-//const { Misc , Ticket } = require('../models/ticketsBD');
+const { Misc , Ticket } = require('../models/ticketsBD');
 
 export const fundamentoscallback = (socket:Socket) => {
     console.log("IN - Fundamentos callback");
@@ -11,7 +11,6 @@ export const fundamentoscallback = (socket:Socket) => {
 
 }
 
-/*
 export const appcola = (socket:Socket) => {
     console.log("IN - Aplicacion de cola");
     socket.on('disconnect',() => {console.log("OUT - Aplicacion de cola")});
@@ -51,4 +50,3 @@ export const appcola = (socket:Socket) => {
     });
     socket.on('alarmaticketida',async()=>{socket.emit('alarmaticketvuelta')});
 }
-*/
