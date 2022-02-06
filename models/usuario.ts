@@ -12,9 +12,11 @@ export class ConexionUsuario {
     
     private usuarios:string[] = [];
 
-    traerusuario(id:string):string[]{
-        this.usuarios.push(id);
-        return this.usuarios;
+    async traerusuario(id:string){
+       return new Promise((rs,rj) => {
+           const consulta = Usuario.find();
+           rs(consulta);
+       })
     }
     
     constructor(){}
