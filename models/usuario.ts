@@ -1,4 +1,5 @@
 import { Schema , model } from 'mongoose';
+import { Socket } from 'socket.io';
 
 interface usuario { correo:string , nick:string ,pass:string , pic:string };
 const usuarioSchema = new Schema({
@@ -10,8 +11,21 @@ const usuarioSchema = new Schema({
 
 export class ConexionUsuario {
     
-    public conectados:string[] = [];
-    
+    private conectados:string[] = [] ; public get getcon(){return this.conectados};
+
     constructor(){}
+
+    public pokecon(socket:Socket,accion:string,usuario:string){
+
+        const emision = () => {
+            socket.emit('conectados',this.conectados);
+            socket.broadcast.emit('conectados',this.conectados);
+        }
+
+        switch(accion){
+            case 'conectar':this.conectados.push(usuario);emision();break;
+            case 'desconectar':this.conectados.splice(this.conectados.indexOf(usuario),1);emision();break;
+        };
+    }
 
 }

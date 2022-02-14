@@ -1,21 +1,22 @@
-import { v4 } from 'uuid';
 import { Socket } from 'socket.io';
 import { ConexionUsuario } from '../models/usuario';
-import { indexOf } from 'underscore';
-
+import { Server as _is } from 'socket.io';
 const conexiones = new ConexionUsuario;
+
 export const iochat = (socket:Socket) => {
-    console.log("CONECTADO");
+    
+    console.log("CONECTADO",socket.id);
     
     let correoconexion:string|undefined;
     
-    socket.on('conectados',(msg:string|undefined,callback) => {
-        if(msg){correoconexion = msg ; conexiones.conectados.push(msg)};
-        callback(conexiones.conectados);
-    });
+    socket.on('conpoke',(callback) => {callback(conexiones.getcon)});
+    socket.on('conexion',(msg:string) => {
+        correoconexion = msg;
+        conexiones.pokecon(socket,'conectar',correoconexion)
+    })
     socket.on('disconnect',() => {
-        console.log("DESCONECTADO");
-        if(correoconexion){conexiones.conectados.splice(conexiones.conectados.indexOf(correoconexion || ""),1)};
+        console.log("DESCONECTADO",socket.id)
+        conexiones.pokecon(socket,'desconectar',correoconexion = "");
     });
 
 }
