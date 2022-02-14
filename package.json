@@ -2,7 +2,7 @@
   "name": "TsNode-Socket.io",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "killall -9 node ; nodemon dist/app.js & tsc --watch"

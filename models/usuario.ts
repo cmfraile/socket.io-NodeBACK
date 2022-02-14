@@ -10,14 +10,7 @@ const usuarioSchema = new Schema({
 
 export class ConexionUsuario {
     
-    private usuarios:string[] = [];
-
-    async traerusuario(id:string){
-       return new Promise((rs,rj) => {
-           const consulta = Usuario.find();
-           rs(consulta);
-       })
-    }
+    public conectados:string[] = [];
     
     constructor(){}
 
