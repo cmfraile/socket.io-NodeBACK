@@ -10,6 +10,7 @@ export const iochat = (socket:Socket) => {
     let correoconexion:string|undefined;
     
     socket.on('conpoke',(callback) => {callback(conexiones.getcon)});
+    socket.on('pokeperfil', () => { socket.emit('pokeperfil') ; socket.broadcast.emit('pokeperfil') } );
     socket.on('conexion',(msg:string) => {
         correoconexion = msg;
         conexiones.pokecon(socket,'conectar',correoconexion)
