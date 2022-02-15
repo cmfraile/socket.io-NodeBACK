@@ -11,10 +11,9 @@ const usuarioSchema = new Schema({
 
 export class ConexionUsuario {
     
-    private conectados:string[] = [] ; public get getcon(){return this.conectados};
-
     constructor(){}
 
+    private conectados:string[] = [] ; public get getcon(){return this.conectados};
     public pokecon(socket:Socket,accion:string,usuario:string){
 
         const emision = () => {

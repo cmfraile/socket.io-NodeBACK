@@ -8,7 +8,10 @@ export const iochat = (socket:Socket) => {
     console.log("CONECTADO",socket.id);
     
     let correoconexion:string|undefined;
+
+    //CORREGIR ENTERO:
     
+    /*
     socket.on('conpoke',(callback) => {callback(conexiones.getcon)});
     socket.on('pokeperfil', () => { socket.emit('pokeperfil') ; socket.broadcast.emit('pokeperfil') } );
     socket.on('conexion',(msg:string) => {
@@ -19,5 +22,6 @@ export const iochat = (socket:Socket) => {
         console.log("DESCONECTADO",socket.id)
         conexiones.pokecon(socket,'desconectar',correoconexion = "");
     });
+    */
 
 }
