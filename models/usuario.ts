@@ -17,8 +17,8 @@ export class ConexionUsuario {
     public pokecon(socket:Socket,accion:string,usuario:string){
 
         const emision = () => {
-            socket.emit('conectados',this.conectados);
-            socket.broadcast.emit('conectados',this.conectados);
+            socket.emit('pokeperfil',this.conectados);
+            socket.broadcast.emit('pokeperfil',this.conectados);
         }
 
         switch(accion){

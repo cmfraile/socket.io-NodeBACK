@@ -42,7 +42,7 @@ class iofn {
         this.socket.on('disconnect',() => {
             if(this.idconexion == undefined){return};
             console.log("DESCONECTADO",this.socket.id);
-            this.ic.pokecon(this.socket,'desconectar',this.idconexion = "");
+            this.ic.pokecon(this.socket,'desconectar',this.idconexion);
         });
     }
 
