@@ -22,6 +22,8 @@ class iofn {
         
         //Instanciamos todo el socketizado:
         this.estadousuarios();
+        
+        //Socket de desconexion al final:
         this.desconexion();
     }
 
