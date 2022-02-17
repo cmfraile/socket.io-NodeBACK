@@ -3,7 +3,6 @@ import { ConexionUsuario } from '../models/usuario';
 import { Server as _is } from 'socket.io';
 const conexiones = new ConexionUsuario;
 
-
 export const iochat = (socket:Socket) => {
     
     console.log("CONECTADO",socket.id);
