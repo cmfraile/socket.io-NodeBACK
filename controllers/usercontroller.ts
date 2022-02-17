@@ -38,7 +38,7 @@ const getUsuarios = async(req:Request,res:Response) => {
         bd.forEach((x:any) => {
             const { _id , correo , nick , pass , pic , __v } = x;
             consulta.push({
-                correo,nick,
+                _id,correo,nick,
                 pic : `${dumbcall}${pic}`
             });
         });

@@ -3,25 +3,48 @@ import { ConexionUsuario } from '../models/usuario';
 import { Server as _is } from 'socket.io';
 const conexiones = new ConexionUsuario;
 
+
 export const iochat = (socket:Socket) => {
     
     console.log("CONECTADO",socket.id);
-    
-    let correoconexion:string|undefined;
+    new iofn(socket,conexiones);
 
-    //CORREGIR ENTERO:
+}
+
+class iofn {
+
+    private idconexion:string|undefined;
+    private socket:Socket;
+    private ic:ConexionUsuario;
     
-    /*
-    socket.on('conpoke',(callback) => {callback(conexiones.getcon)});
-    socket.on('pokeperfil', () => { socket.emit('pokeperfil') ; socket.broadcast.emit('pokeperfil') } );
-    socket.on('conexion',(msg:string) => {
-        correoconexion = msg;
-        conexiones.pokecon(socket,'conectar',correoconexion)
-    })
-    socket.on('disconnect',() => {
-        console.log("DESCONECTADO",socket.id)
-        conexiones.pokecon(socket,'desconectar',correoconexion = "");
-    });
-    */
+    constructor(socket:Socket,instanciaconexiones:ConexionUsuario){
+        this.socket = socket;
+        this.ic = instanciaconexiones;
+        
+        //Instanciamos todo el socketizado:
+        this.estadousuarios();
+        this.desconexion();
+    }
+
+    //Funcion que añade el socketizado del estado de los usuarios:
+    private estadousuarios(){
+        this.socket.on('conpoke',(cb) => {cb(this.ic.getcon)});
+        this.socket.on('pokeperfil',() => {
+            this.socket.emit('pokeperfil') ; this.socket.broadcast.emit('pokeperfil');
+        });
+        this.socket.on('conexion',(msg:string) => {
+            this.idconexion = msg;
+            this.ic.pokecon(this.socket,'conectar',this.idconexion);
+        });
+    }
+    
+    //Funcion que añade el socketizado de desconexión:
+    private desconexion(){
+        this.socket.on('disconnect',() => {
+            if(this.idconexion == undefined){return};
+            console.log("DESCONECTADO",this.socket.id);
+            this.ic.pokecon(this.socket,'desconectar',this.idconexion = "");
+        });
+    }
 
 }
