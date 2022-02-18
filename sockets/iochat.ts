@@ -1,12 +1,10 @@
 import { Socket } from 'socket.io';
 import { ConexionUsuario } from '../models/usuario';
-import { Server as _is } from 'socket.io';
-const conexiones = new ConexionUsuario;
 
-export const iochat = (socket:Socket) => {
+export const iochat = (socket:Socket,cu:ConexionUsuario) => {
     
     console.log("CONECTADO",socket.id);
-    new iofn(socket,conexiones);
+    new iofn(socket,cu);
 
 }
 
@@ -22,6 +20,7 @@ class iofn {
         
         //Instanciamos todo el socketizado:
         this.estadousuarios();
+        this.chatpublico();
         
         //Socket de desconexion al final:
         this.desconexion();
@@ -37,6 +36,10 @@ class iofn {
             this.idconexion = msg;
             this.ic.pokecon(this.socket,'conectar',this.idconexion);
         });
+    }
+
+    private chatpublico(){
+
     }
     
     //Funcion que añade el socketizado de desconexión:

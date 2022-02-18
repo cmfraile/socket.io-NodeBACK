@@ -4,6 +4,7 @@ import cors , { CorsOptions } from 'cors';
 import { createServer , Server as _hs } from 'http';
 import { Server as _is } from 'socket.io';
 import { iochat } from '../sockets/iochat';
+import { ConexionUsuario } from './usuario';
 import fs from 'fs';
 import path from 'path';
 
@@ -14,6 +15,7 @@ class Server {
     private coptions:CorsOptions = {origin:'*',methods:'*'};
     private httpserver:_hs;
     private ioserver:_is;
+    private cu:ConexionUsuario;
     private paths = {
         misc:'/api/',
         user:'/api/user/'
@@ -24,6 +26,7 @@ class Server {
         this.port = process.env.PORT || '8000';
         this.httpserver = createServer(this.app);
         this.ioserver = new _is(this.httpserver,{cors:this.coptions});
+        this.cu = new ConexionUsuario(this.ioserver);
         this.middlewares();
         this.routes();
         this.conectarDB();
@@ -55,7 +58,7 @@ class Server {
     async conectarDB(){await dbC()};
 
     sockets(){
-        this.ioserver.on('connect',iochat);
+        this.ioserver.on('connect',(socket) => { iochat(socket,this.cu) })
     }
 
     async testing(){
@@ -77,7 +80,7 @@ class Server {
     listen(){
         this.httpserver.listen(this.port, () => {
             console.log(`CORRIENDO EN ${this.port}`);
-        })
+        });
     }
 
 }
