@@ -32,14 +32,17 @@ class iofn {
         this.socket.on('pokeperfil',() => {
             this.socket.emit('pokeperfil') ; this.socket.broadcast.emit('pokeperfil');
         });
-        this.socket.on('conexion',(msg:string) => {
+        this.socket.on('conexion',async(msg:string) => {
             this.idconexion = msg;
             this.ic.pokecon(this.socket,'conectar',this.idconexion);
         });
     }
 
     private chatpublico(){
-
+        this.socket.on('msgpublico',(msg:string) => {
+            const mensaje = {id:this.idconexion,mensaje:msg};
+            this.ic.msgpublico(this.socket,mensaje)
+        })
     }
     
     //Funcion que añade el socketizado de desconexión:
