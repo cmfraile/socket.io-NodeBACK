@@ -46,10 +46,17 @@ export class ConexionUsuario {
     }
 
     private mensajes:any[] = [] ; public get getmsg(){return this.mensajes};
-    public msgpublico(socket:Socket,msg:any){
+    public async msgpublico(socket:Socket,msg:any){
         const { id , mensaje } = msg ;
-
-        
+        axios.get(`http://localhost:8000/api/user/${id}`).then((resp:any) => {
+            const fullmsg = {
+                id,msg,
+                nick:resp.data.nick,
+                pic:resp.data.pic
+            };
+            this.mensajes.push(fullmsg);
+            socket.emit('msgpublico',fullmsg);
+        });
     }
 
 

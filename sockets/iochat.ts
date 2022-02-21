@@ -39,9 +39,10 @@ class iofn {
     }
 
     private chatpublico(){
-        this.socket.on('msgpublico',(msg:string) => {
+        this.socket.on('msgpublipoke',(cb) => {cb(this.ic.getmsg)});
+        this.socket.on('msgpublico',async(msg:string) => {
             const mensaje = {id:this.idconexion,mensaje:msg};
-            this.ic.msgpublico(this.socket,mensaje)
+            await this.ic.msgpublico(this.socket,mensaje)
         })
     }
     
