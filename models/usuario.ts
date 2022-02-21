@@ -30,7 +30,6 @@ export class ConexionUsuario {
             return new Promise<void>(async(rs,rj) => {
                 axios.get(`http://localhost:8000/api/user/${usuario}`).then((resp:any) => {
                 const fulldata = {id:usuario,nick:resp.data.nick,pic:resp.data.pic};
-                console.log(fulldata);
                 this.conectados.push(fulldata);
                 rs();
             }).catch(rj);
