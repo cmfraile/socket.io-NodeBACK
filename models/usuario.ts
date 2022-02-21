@@ -50,12 +50,13 @@ export class ConexionUsuario {
         const { id , mensaje } = msg ;
         axios.get(`http://localhost:8000/api/user/${id}`).then((resp:any) => {
             const fullmsg = {
-                id,msg,
+                id,mensaje,
                 nick:resp.data.nick,
-                pic:resp.data.pic
+                pic:resp.data.pic,
+                fecha: new Date()
             };
             this.mensajes.push(fullmsg);
-            socket.emit('msgpublico',fullmsg);
+            this.ios.emit('msgpublico',fullmsg);
         });
     }
 
